@@ -1,0 +1,1 @@
+# coursehunter-bot
