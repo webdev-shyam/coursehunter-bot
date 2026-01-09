@@ -26,8 +26,9 @@ const freeCourses = [
 const TelegramBot = require('node-telegram-bot-api');
 
 // Replace with your Bot Token from BotFather
-const token = '8502013942:AAE5OgY36u7FkuTehBepZ-5cJ-AF762S7PQ';
 
+require('dotenv').config();
+const token = process.env.BOT_TOKEN;
 // Create bot with polling (simple way)
 const bot = new TelegramBot(token, { polling: true });
 
@@ -40,7 +41,8 @@ Send /free to get free courses.`);
 });
 
 bot.onText(/\/categories/, (msg) => {
-  const chatId = msg.chat.id;
+  const chatId = msg.
+chat.id;
 
   // Unique categories
   const categories = [...new Set(freeCourses.map(course => course.category))];
