@@ -70,37 +70,37 @@ bot.on("callback_query", async (query) => {
   }
 
   // Add more categories here later
+  if (data === "discount_100_programming") {
+    bot.sendMessage(chatId, "Fetching 100% free Programming courses... 🚀");
+  
+    try {
+      const response = await axios.get(
+        "https://www.udemyfreebiesapi.com/api/courses?category=programming"
+      );
+  
+      const courses = response.data.filter(
+        (c) => c.discount_percent === 100
+      );
+  
+      if (courses.length === 0) {
+        bot.sendMessage(chatId, "No free Programming courses found 😢");
+      } else {
+        courses.slice(0, 10).forEach((course, index) => {
+          bot.sendMessage(
+            chatId,
+            `${index + 1}. ${course.title} – ${course.discount_percent}% Off\n${course.url}`
+          );
+        });
+      }
+    } catch (error) {
+      bot.sendMessage(chatId, "Error fetching courses 😢");
+      console.error(error);
+    }
+  }
 });
 
 // Fetching Courses form API
 
-if (data === "discount_100_programming") {
-  bot.sendMessage(chatId, "Fetching 100% free Programming courses... 🚀");
-
-  try {
-    const response = await axios.get(
-      "https://www.udemyfreebiesapi.com/api/courses?category=programming"
-    );
-
-    const courses = response.data.filter(
-      (c) => c.discount_percent === 100
-    );
-
-    if (courses.length === 0) {
-      bot.sendMessage(chatId, "No free Programming courses found 😢");
-    } else {
-      courses.slice(0, 10).forEach((course, index) => {
-        bot.sendMessage(
-          chatId,
-          `${index + 1}. ${course.title} – ${course.discount_percent}% Off\n${course.url}`
-        );
-      });
-    }
-  } catch (error) {
-    bot.sendMessage(chatId, "Error fetching courses 😢");
-    console.error(error);
-  }
-}
 
 
 // Start server
